@@ -23,3 +23,4 @@
 	docker-compose start [exp|cass]
 	docker-compose stop  [exp|cass]
 	docker-compose build 
+	docker-compose up -d	#can also be used to refresh both services
