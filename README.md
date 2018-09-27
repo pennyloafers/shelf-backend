@@ -1,26 +1,37 @@
-# To build and start the services in background mode
+#Starting
+To build and start the services in background mode
 
-        docker-compose up -d
+```bash
+$ docker-compose up -d
+```
+For local express development
 
-# You can run cqlsh directly within the container.
+```bash
+$ docker-compose start cassandra
+```
 
-        docker exec -it cass cqlsh
+You can run cqlsh or bash directly within the container.
+```bash
+$ docker exec -it cass cqlsh
+$ docker exec -it cass bash
+```
+#Notes
+- All ports are exposed to host machine for both services. In the future this should change.
+- For API development edit files within the api directory.
+- Express container must be restarted for every api update.
+- Alternativly you could run the cassandra container only and connect a locally hosted express server by running node on your machine.
 
-# All ports are exposed to host machine for both services.
-# In the future we should only connect with express.
+# Useful commands 
+`[optional]`
 
-# For API development edit files within the api directory.
-# Express container must be restarted for every api update.
-
-######## Useful commands ########### 
-# [optional]
-
-# look at out put from containers
-        docker logs exp|cass            (exp or cass)
-        
-# Starting Stoping rebuilding
-
-        docker-compose start [exp|cass]
-        docker-compose stop  [exp|cass]
-        docker-compose build 
-        docker-compose up -d    #can also be used to refresh both services
+## Look at output from containers
+```bash
+$ docker logs exp|cass            (exp or cass)
+```      
+## Starting Stoping rebuilding
+```bash
+$ docker-compose start [express|cassandra]
+$ docker-compose stop  [express|cassandra]
+$ docker-compose build 
+$ docker-compose up -d    #can also be used to refresh both services
+```
