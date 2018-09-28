@@ -1,5 +1,5 @@
 const express = require('express');
-const cassClient = require('./cassandra_client/client');
+const cassClient = require('./services/cassandra-client');
 const app = express();
 const port = 8888;
 

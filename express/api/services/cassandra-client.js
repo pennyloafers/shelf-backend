@@ -6,10 +6,21 @@
 const cassandra = require('cassandra-driver');
 
 //cassandra role login
+//should change default username/password to cassandra
 const authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra','cassandra');
 
-//should change default username/password to cassandra
-//const authProvidertest = new cassandra.auth.PlainTextAuthProvider('mcarl','password');
+//test connect
+const client = new cassandra.Client({
+    contactPoints: ['172.20.0.3'],
+    authProvider: authProvider,
+    socketOptions:{
+        connectTimeout: 15000 
+    }
+    //keyspace: 'our_app'
+});
+
+module.exports = client;
+
 
 // example
 // const fs = require("fs");
@@ -26,16 +37,3 @@ const authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra','cassa
 //     sslOptions: sslOptions,
 //     keyspace: our_app,
 // });
-
-//test connect
-const client = new cassandra.Client({
-    contactPoints: ['172.20.0.3'],
-    authProvider: authProvider,
-    socketOptions:{
-        connectTimeout: 15000 
-    }
-    //keyspace: 'our_app'
-});
-
-
-module.exports = client; 
