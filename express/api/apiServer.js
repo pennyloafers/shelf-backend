@@ -13,8 +13,10 @@ cassClient.connect(function (err) {
     if (err) return console.error(err);
     console.log('Connected to cluster with %d host(s): %j', cassClient.hosts.length, cassClient.hosts.keys());
     console.log('Keyspaces: %j', Object.keys(cassClient.metadata.keyspaces));
+    
     app.listen(port, () => {
         console.log(`App is listening on port ${port}!`)
     });
+    
     console.log("Connected to Cassandra Server ");
 });
