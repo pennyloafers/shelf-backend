@@ -8,6 +8,7 @@
 # Useful commands
 
  - #this will copy the config file to the host.
+```bash
 	docker cp cass:/etc/cassandra/cassandra.yaml ./cassandra/settings
-
+```
 	
