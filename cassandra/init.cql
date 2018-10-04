@@ -40,3 +40,6 @@ CREATE TABLE IF NOT EXISTS shelf.shelves(
     comments set<frozen<comment>>,
     PRIMARY KEY(username, shelf_id)
 );
+
+COPY shelf.users (id, username, password, email) FROM './users.csv' WITH HEADER = TRUE;
+COPY shelf.shelves (shelf_id,name,username,date_created,date_modified,type,description,items,comments) FROM './shelves.csv' WITH HEADER = TRUE;

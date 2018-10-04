@@ -1,6 +1,12 @@
+# Initialize Cassandra
+
+docker cp init.cql cass:/inti.cql
+docker exec -it cqlsh -f ./init.cql
+
+
 # Useful commands
 
-bash ```
-	#this will copy the config file to the host.
+ - #this will copy the config file to the host.
 	docker cp cass:/etc/cassandra/cassandra.yaml ./cassandra/settings
-```
+
+	
