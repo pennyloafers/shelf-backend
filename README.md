@@ -15,6 +15,9 @@ You can run cqlsh or bash directly within the container.
 $ docker exec -it cass cqlsh
 $ docker exec -it cass bash
 ```
+# Important Steps
+- to initialize cassandra copy `/cassandra/init` folder. Then run `docker exec cass cqlsh -f /init/init.cql`.
+
 # Notes
 - should ONLY use the `docker-compose.yml` file in root directory.
 - All ports are exposed to host machine for both services. In the future this should change.

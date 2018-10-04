@@ -1,10 +1,9 @@
 # Initialize Cassandra
 
-docker cp init.cql cass:/inti.cql
-docker cp users.csv cass:/users.csv
-docker cp shelves.csv cass:/shelves.csv
-docker exec -it cqlsh -f ./init.cql
-
+```bash
+	docker cp /init cass:/init
+	docker exec cqlsh -f /init/init.cql
+```
 
 # Useful commands
 

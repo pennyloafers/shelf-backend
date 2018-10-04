@@ -41,5 +41,5 @@ CREATE TABLE IF NOT EXISTS shelf.shelves(
     PRIMARY KEY(username, shelf_id)
 );
 
-COPY shelf.users (id, username, password, email) FROM './users.csv' WITH HEADER = TRUE;
-COPY shelf.shelves (shelf_id,name,username,date_created,date_modified,type,description,items,comments) FROM './shelves.csv' WITH HEADER = TRUE;
+COPY shelf.users (id, username, password, email) FROM './init/users.csv' WITH HEADER = TRUE;
+COPY shelf.shelves (shelf_id,name,username,date_created,date_modified,type,description,items,comments) FROM './init/shelves.csv' WITH HEADER = TRUE;
