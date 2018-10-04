@@ -2,20 +2,25 @@ CREATE KEYSPACE IF NOT EXISTS shelf WITH replication = {'class':'SimpleStrategy'
 
 USE shelf;
 
-CREATE TYPE IF NOT EXISTS item(
+CREATE TYPE IF NOT EXISTS shelf.descript(
+    title text,
+    body text
+);
+
+CREATE TYPE IF NOT EXISTS shelf.item(
     title text,
     date_added timestamp,
-    description text,
+    description frozen<descript>,
     tags set<text>
 );
 
-CREATE TYPE IF NOT EXISTS comment(
+CREATE TYPE IF NOT EXISTS shelf.comment(
     username text,
     date_added timestamp,
     message text
 );
 
-CREATE TABLE IF NOT EXISTS users(
+CREATE TABLE IF NOT EXISTS shelf.users(
     id uuid,
     username text,
     password text,
@@ -23,14 +28,14 @@ CREATE TABLE IF NOT EXISTS users(
     PRIMARY KEY (username)
 );
 
-CREATE TABLE IF NOT EXISTS shelves(
+CREATE TABLE IF NOT EXISTS shelf.shelves(
     shelf_id uuid,
     name text,
     username text,
     date_created timestamp,
     date_modified timestamp,
     type text,
-    description text,
+    description frozen<descript>,
     items set<frozen<item>>,
     comments set<frozen<comment>>,
     PRIMARY KEY(username, shelf_id)
