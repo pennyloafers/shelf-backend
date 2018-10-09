@@ -1,7 +1,17 @@
 const express = require('express');
 const cassClient = require('./services/cassandra-client');
+const bodyParser = require("body-parser");
+
+const secret = require('./secret.js');
+
 const app = express();
 const port = 8888;
+
+console.log(secret.jwt());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 app.get('/', (req, res) => res.send("HEY it is connected to cassandra"));
 
