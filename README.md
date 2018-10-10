@@ -47,4 +47,5 @@ $ docker-compose start [express|cassandra]
 $ docker-compose stop  [express|cassandra]
 $ docker-compose build 
 $ docker-compose up -d    #can also be used to refresh both services
+$ docker-compose down     #!! will remove images, containers, volumes, networks ... best for cleanup
 ```
