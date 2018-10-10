@@ -8,12 +8,14 @@ router.post('/getUserShelves', getUserShelves);
 function getUserShelves(req,res) {
     console.log(req)
     //Build query: ? can be filled later
-    let query = "SELECT * FROM shelves WHERE username = ?";
+    const query = "SELECT * FROM shelves WHERE username = ?";
 
     //Prepare parameters for ?'s: must be an array
     const params = [req.user];
  
-    //call client with query & params: {prepare: true}
+    //call client with query & params: 
+    // {prepare: true} has some performance benifits for reusing the query
+    // not sure if this is applicable.
     cassClient.execute(query, params, { prepare: true })
     .then(result => {
         console.log(result);

@@ -1,0 +1,80 @@
+//app view
+const app = {
+    globalTemplates: [
+        {
+            shelfType: 'makeNewTemplate',
+        },
+        {
+            shelfType: 'movietemplate',
+        },
+        {
+            shelfType: 'bookTemplate',
+        },
+    ],
+    user: {
+        userName: string,
+        userEmail: string,
+        userToken: string, 
+        userTemplates: [
+            {templateItem = item }
+        ],
+        bookcase: [
+            shelves: [
+                {
+                    shelfType: 'name for this shelf',
+                    shelfID: number
+                    shelfCreated: date
+                    shelfContents: [
+                        {
+                            itemName: string,
+                            itemID: number,
+                            itemCreate: date,
+                            imageBlob: buffer,
+                            tags: [
+                                'string tags',
+                            ],
+                            otherProps: [
+                                {
+                                    key: '',
+                                    value: '',
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ]
+        ],
+    },
+};
+
+//itemized
+user = {
+    userName: string,
+    userEmail: string,
+    userToken: string, 
+    userTemplates: [{templateItem = item }],
+    bookcase: [{shelf}]
+}
+
+shelf = { 
+    shelfType: 'name for this shelf',
+    shelfID: number,
+    shelfCreated: date,
+    shelfContents: [{items}]
+}
+
+item =  {
+    itemName: string,
+    itemID: number,
+    itemCreated: date,
+    imageBlob: buffer,
+    tags: [tag],
+    otherProps: [{prop}]
+}
+
+tag = 'string';
+
+prop = {
+    key: 'string',
+    value: 'string'
+}

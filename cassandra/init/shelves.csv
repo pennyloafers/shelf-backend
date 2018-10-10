@@ -1,5 +1,5 @@
 shelf_id,name,username,date_created,date_modified,type,description,items,comments
-dbf8660d-eb8a-488f-8ae1-85415481b61b,My Books,userOne,2011-02-03,2011-02-03,Books,(),(),()
+dbf8660d-eb8a-488f-8ae1-85415481b61b,My Books,userOne,2011-02-03,2011-02-03,Books,"{key:books , value:adventure }",(),()
 8b1cd491-1357-4439-8f0a-07ca2e6c62a6,Cars,userTWO,2011-02-03,2011-02-03,Books,(),(),()
 4a88ae30-bc79-471e-b7ea-cc772dfe33c1,Movies,tim,2011-02-03,2011-02-03,Books,(),(),()
 63914078-a04f-4da3-a765-c999b4d24680,Spoons,tim,2011-02-03,2011-02-03,spoons,(),(),()

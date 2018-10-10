@@ -1,0 +1,5 @@
+username, shelf_type, shelf_id, shelf_created
+userTwo,Cars,8b1cd491-1357-4439-8f0a-07ca2e6c62a6,2018-10-10 19:50:14.356+0000
+tim,Movies,4a88ae30-bc79-471e-b7ea-cc772dfe33c1,2018-10-10 19:48:56.321+0000
+tim,Spoons,63914078-a04f-4da3-a765-c999b4d24680,2018-10-10 19:48:19.044+0000
+userOne,books,dbf8660d-eb8a-488f-8ae1-85415481b61b,2018-10-10 19:49:37.569+0000
