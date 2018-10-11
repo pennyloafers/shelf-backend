@@ -1,5 +1,5 @@
 const express = require('express');
-const cassClient = require('./services/cassandra-client');
+const cassClient = require('../services/cassandra-client');
 
 const router = express();
 
