@@ -16,7 +16,8 @@ $ docker exec -it cass cqlsh
 $ docker exec -it cass bash
 ```
 # Important Steps
-- to initialize cassandra copy `/cassandra/init` folder. Then run `docker exec cass cqlsh -f /init/init.cql`.
+- to initialize cassandra, copy `/cassandra/init` folder into container. Then run `docker exec cass cqlsh -f /init/init.cql`.
+- exact commmands are in cassandra folder README.md.
 
 # Notes
 - should ONLY use the `docker-compose.yml` file in root directory.
@@ -46,4 +47,5 @@ $ docker-compose start [express|cassandra]
 $ docker-compose stop  [express|cassandra]
 $ docker-compose build 
 $ docker-compose up -d    #can also be used to refresh both services
+$ docker-compose down     #!! will remove images, containers, volumes, networks ... best for cleanup
 ```

@@ -1,0 +1,9 @@
+username, shelf_id, item_name, item_id, image_blob, item_created, tags
+userOne,dbf8660d-eb8a-488f-8ae1-85415481b61b,hobbit,2a19602e-d99f-4fd8-a55e-1f166d3eff0a,,2018-10-10 19:34:31.078+0000,"{'adventure', 'phylosophy'}"
+userOne,dbf8660d-eb8a-488f-8ae1-85415481b61b,hobbit,7f2ef522-547e-4bc5-806e-bbaa774db4df,,2018-10-10 19:37:33.996+0000,"{'adventure', 'phylosophy'}"
+tim,63914078-a04f-4da3-a765-c999b4d24680,Silver Spoon,f6af2778-17e6-437c-928c-0a6caadf2a80,,2018-10-10 19:43:14.311+0000,"{'Silver', 'Victorian'}"
+tim,63914078-a04f-4da3-a765-c999b4d24680,Wood Spoon,bcca1116-2f83-4847-a620-96c653e23560,,2018-10-10 19:43:37.996+0000,"{'Caveman', 'priceless'}"
+userTwo,8b1cd491-1357-4439-8f0a-07ca2e6c62a6,Ford Mustang,e6a29e5a-2b32-441b-84ed-dd021787d50e,,2018-10-10 19:40:19.690+0000,"{'5.0', 'black', 'muscle car'}"
+userTwo,8b1cd491-1357-4439-8f0a-07ca2e6c62a6,Ford Pinto,e063e61b-b1b1-4e3c-a757-d1dbea74637f,,2018-10-10 19:39:34.770+0000,"{'antique', 'blue'}"
+tim,4a88ae30-bc79-471e-b7ea-cc772dfe33c1,The Amazing Spiderman,99e655aa-7eef-4c50-a7ca-61a7fa439e48,,2018-10-10 19:41:43.030+0000,"{'Toby', 'web-slinger'}"
+tim,4a88ae30-bc79-471e-b7ea-cc772dfe33c1,The Matrix,706cdd47-955f-417b-bf60-8547a6f51813,,2018-10-10 19:42:22.884+0000,"{'The One', 'action'}"
