@@ -21,8 +21,8 @@ $ docker exec -it cass bash
 - must add `secret.js` file to fill hidden secrets in `/express/api` route.
 ```bash
   module.exports = {
-    "jwt": "yourSecret",
-    "cassPass": "cassandra"   #default password for cassandra container.
+    jwt: "yourSecret",
+    cassPass: "cassandra"   #default password for cassandra container.
   };
 ```
 
