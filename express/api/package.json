@@ -10,9 +10,10 @@
   "author": "Mario, Joe",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.8.1",
     "cassandra-driver": "^3.5.0",
     "express": "^4.16.3",
-    "body-parser": "^1.8.1",
     "express-jwt": "^5.3.1"
   }
 }

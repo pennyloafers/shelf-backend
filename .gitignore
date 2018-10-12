@@ -1,3 +1,3 @@
 /express/api/node_modules
-/express/api/secret.js
+/express/api/secret.json
 /cassandra/data

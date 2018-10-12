@@ -16,8 +16,8 @@ const client = new cassandra.Client({
     authProvider: authProvider,
     socketOptions:{
         connectTimeout: 15000 
-    }
-    //keyspace: 'our_app'
+    },
+    keyspace: 'shelf'
 });
 
 module.exports = client;
