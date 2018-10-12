@@ -4,14 +4,15 @@
  */
 
 const cassandra = require('cassandra-driver');
-
+const secret = require('../secret');
+const ip = '172.20.0.3';
 //cassandra role login
 //should change default username/password to cassandra
-const authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra','cassandra');
+const authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra',secret.cassPass);
 
 //test connect
 const client = new cassandra.Client({
-    contactPoints: ['172.20.0.3'],
+    contactPoints: ['localhost'],
     authProvider: authProvider,
     socketOptions:{
         connectTimeout: 15000 
