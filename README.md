@@ -18,12 +18,12 @@ $ docker exec -it cass bash
 # Important Steps
 - to initialize cassandra, copy `/cassandra/init` folder into container. Then run `docker exec cass cqlsh -f /init/init.cql`.
 - exact commmands are in cassandra folder README.md.
-- must add `secret.js` file to fill hidden secrets in `/express/api` route.
+- must add `secret.json` file to fill hidden secrets in `/express/api` route.
 ```bash
-  module.exports = {
-    jwt: "yourSecret",
-    cassPass: "cassandra"   #default password for cassandra container.
-  };
+  {
+    "jwt": "yourSecret",
+    "cassPass": "cassandra"   #default password for cassandra container.
+  }
 ```
 
 # Notes
