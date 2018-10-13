@@ -2,29 +2,38 @@ const express = require('express');
 const cassClient = require('../services/cassandra-client');
 const router = express();
 
-//add item description       *
-//remove item description    *
-//edit item description      *
+router.post('/getItemDescript',getItemDescript);
+router.post('/updateItemDescript',updateItemDescript);
 
+module.exports = router;
 
+/**
+ * get item descriptions
+ * will return an array
+ */
 
-router.post('/removeShelf',removeShelf);
-function removeShelf(req,res){
-    const query =   'DELETE FROM shelf.shelves_by_username '+
-                    'WHERE username = ? AND shelf_type = ? AND shelf_id = ?;';
+function getItemDescript(req,res){
+    const query =   'SELECT descriptions FROM shelf.item_props_by_item '+
+                    'WHERE username = ? AND item_id = ?;';
     const params = [
-        req.User,
-        req.body.shelfType,
-        req.body.shelfID
+        req.body.username,
+        req.body.itemID,
     ];
+
+    // const params = [
+    //     'tim',
+    //     '706cdd47-955f-417b-bf60-8547a6f51813'
+    // ]
 
     cassClient.execute(query, params, { prepare: true })
     .then(result => {
         //check if success
-        if(true){
-            res.send({success: true});
-        } else {
-            res.send({success: false});
+        
+        console.log(result.rows[0]);
+        if(result.rows[0]){
+            res.status(200).send({otherProps:result.rows[0].descriptions});
+        }else{
+            res.status(200).send({otherProps:[]});
         }
     })
     .catch (error => {
@@ -33,7 +42,28 @@ function removeShelf(req,res){
     })
 }
 
-module.exports = router;
+/**
+ * update item description
+ * this will update all descriptions.
+ * as an upsert.
+ */
+function updateItemDescript(req,res){
+    const query = 'INSERT INTO shelf.item_props_by_item (username, item_id, descriptions) VALUES (?,?,?);'
+    const params = [
+        req.body.username,
+        req.body.itemID,
+        req.body.otherProps
+    ];
+
+    cassClient.execute(query, params, { prepare: true })
+    .then(result => {
+        res.status(200).send({message:'Success'});
+    })
+    .catch (error => {
+        console.log(error.message);
+        res.status(500).send({error:'Server error'});
+    }) 
+}
 
 /* 
 cassClient.execute(query, params, { prepare: true })

@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS shelf.shelves_by_username(
    shelf_id uuid,
    shelf_created timestamp,
    shelf_type text,
-   PRIMARY KEY (username, shelf_type, shelf_id)
+   PRIMARY KEY (username, shelf_id)
 );
 
 CREATE TABLE IF NOT EXISTS shelf.shelf_contents_by_shelf(
@@ -65,19 +65,18 @@ CREATE TABLE IF NOT EXISTS shelf.shelf_contents_by_shelf(
    image_blob blob,
    item_created timestamp,
    tags set<text>,
-   PRIMARY KEY ((username, shelf_id), item_name, item_id)
+   PRIMARY KEY ((username, shelf_id), item_id)
 );
 
 CREATE TABLE IF NOT EXISTS shelf.item_props_by_item(
    username text,
    item_id uuid,
-   key text,
-   value text,
-   PRIMARY KEY ((username, item_id), key)
+   descriptions list<frozen<shelf.descript>>,
+   PRIMARY KEY (username, item_id)
 );
 
 COPY shelf.users (id, username, password, email) FROM './init/users.csv' WITH HEADER = TRUE;
 COPY shelf.shelves (shelf_id,name,username,date_created,date_modified,type,description,items,comments) FROM './init/shelves.csv' WITH HEADER = TRUE;
 COPY shelf.shelf_contents_by_shelf (username, shelf_id, item_name, item_id, image_blob, item_created, tags) FROM './init/shelf_contents_by_shelf.csv' WITH HEADER = TRUE;
 COPY shelf.shelves_by_username (username, shelf_type, shelf_id, shelf_created) FROM './init/shelves_by_username.csv' WITH HEADER = TRUE;
-COPY shelf.item_props_by_item ( username, item_id, key, value) FROM './init/item_props_by_item.csv' WITH HEADER = TRUE;
+COPY shelf.item_props_by_item ( username, item_id, descriptions) FROM './init/item_props_by_item.csv' WITH HEADER = TRUE;

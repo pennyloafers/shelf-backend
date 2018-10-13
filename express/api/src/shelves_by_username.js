@@ -4,7 +4,7 @@ const cassClient = require('../services/cassandra-client');
 const router = express();
 
 router.post('/getUserShelves', getUserShelves);
-router.post('/newShelf',newShelf);
+router.post('/upsertShelf',upsertShelf);
 router.post('/removeShelf',removeShelf);
 
 module.exports = router;
@@ -18,8 +18,8 @@ function getUserShelves(req,res) {
     const query = "SELECT shelf_type, shelf_id, shelf_created FROM shelf.shelves_by_username WHERE username = ?;";
 
     //Prepare parameters for ?'s: must be an array
-    //const params = [req.User];
-    const params = ['ti'];
+    const params = [req.body.username];
+    //const params = ['userTw'];
      
     //call client with query & params: 
     // {prepare: true} has some performance benifits for reusing the query
@@ -56,25 +56,22 @@ function getUserShelves(req,res) {
  * Create a new Shelf
  */
 
-function newShelf(req,res){
+function upsertShelf(req,res){
     const query =   'INSERT INTO shelf.shelves_by_username '+
                     '(username, shelf_type, shelf_id, shelf_created) '+
                     'VALUES (?,?,?,?);';
+    const shelfID = req.body.shelfID ? req.body.shelfID : Uuid.random();
     const params = [
-        req.User,
+        req.body.username,
         req.body.shelfType,
-        req.body.shelfID,
+        shelfID,
         req.body.shelfCreated 
     ];
 
     cassClient.execute(query, params, { prepare: true })
     .then(result => {
         //if success 
-        if(true){
-            res.status(200).send({success: true});
-        } else {
-            res.status(400).send({success: false});
-        }
+        res.status(200).send({message: 'Success', shelfID});
     })
     .catch (error => {
         console.log(error.message);
@@ -93,7 +90,7 @@ function removeShelf(req,res){
     const query =   'DELETE FROM shelf.shelves_by_username '+
                     'WHERE username = ? AND shelf_type = ? AND shelf_id = ?;';
     const params = [
-        req.User,
+        req.body.username,
         req.body.shelfType,
         req.body.shelfID
     ];
