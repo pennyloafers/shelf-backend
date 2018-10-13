@@ -12,7 +12,7 @@ const authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra',secret
 
 //test connect
 const client = new cassandra.Client({
-    contactPoints: [ip],
+    contactPoints: ['localhost'],
     authProvider: authProvider,
     socketOptions:{
         connectTimeout: 15000 

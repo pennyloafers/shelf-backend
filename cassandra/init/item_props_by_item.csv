@@ -1,13 +1,9 @@
-username,item_id,key,value
-tim,bcca1116-2f83-4847-a620-96c653e23560,history,"Found long ago in a cave next to a rock sealed, food container.(should have had a rock opener...)"
-tim,706cdd47-955f-417b-bf60-8547a6f51813,characters,"neo, trinity, tank, dozer, switch, mouse, sipher, morpheus, agent smith"
-tim,706cdd47-955f-417b-bf60-8547a6f51813,genra,"Action, Scifi"
-userOne,7f2ef522-547e-4bc5-806e-bbaa774db4df,genra,adventure
-userOne,7f2ef522-547e-4bc5-806e-bbaa774db4df,note,this is my special addition
-tim,f6af2778-17e6-437c-928c-0a6caadf2a80,Silerv Content,89%
-tim,99e655aa-7eef-4c50-a7ca-61a7fa439e48,cast,Toby Mguire
-tim,99e655aa-7eef-4c50-a7ca-61a7fa439e48,genra,"action, adventure"
-userOne,2a19602e-d99f-4fd8-a55e-1f166d3eff0a,Description,This is a story about a hobbit in middle earth
-userTwo,e6a29e5a-2b32-441b-84ed-dd021787d50e,vin,123-4621846532
-userTwo,e063e61b-b1b1-4e3c-a757-d1dbea74637f,stats,"3.0 liter engine, twin turbo, Dual manifold exhoust, 16 inch rims"
-userTwo,e063e61b-b1b1-4e3c-a757-d1dbea74637f,vin,564-2163154612
+username,item_id,descriptions
+tim,bcca1116-2f83-4847-a620-96c653e23560,"[{key: 'history', value:'Found long ago in a cave next to a rock sealed, food container.(should have had a rock opener...)'}]"
+tim,706cdd47-955f-417b-bf60-8547a6f51813,"[{key: 'characters', value: 'neo, trinity, tank, dozer, switch, mouse, sipher, morpheus, agent smith'}, {key: 'genra', value: 'Action, Scifi'}]"
+userOne,7f2ef522-547e-4bc5-806e-bbaa774db4df,"[{key: 'genra', value: 'adventure'}, {key: 'note', value: 'this is my special edition'}]"
+tim,f6af2778-17e6-437c-928c-0a6caadf2a80,"[{key: 'Silver Content', value: '89%'}]"
+tim,99e655aa-7eef-4c50-a7ca-61a7fa439e48,"[{key: 'cast', value: 'Toby Mguire'}, {key: 'genra', value: 'action, adventure'}]"
+userOne,2a19602e-d99f-4fd8-a55e-1f166d3eff0a,"[{key: 'Description', value: 'This is a story about a hobbit in middle earth'}]"
+userTwo,e6a29e5a-2b32-441b-84ed-dd021787d50e,"[{key: 'vin', value: '123-4621846532'}]"
+userTwo,e063e61b-b1b1-4e3c-a757-d1dbea74637f,"[{key: 'stats', value: '3.0 liter engine, twin turbo, Dual manifold exhoust, 16 inch rims'}, {key: 'vin', value: '564-2163154612'}]"
