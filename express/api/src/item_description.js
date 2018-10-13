@@ -40,3 +40,4 @@ cassClient.execute(query, params, { prepare: true })
 .then(result => {})
 .catch (error => {}) 
 */
+//insert into item_props_by_item (username, item_id , key , value ) values ('userTwo',e063e61b-b1b1-4e3c-a757-d1dbea74637f,'stats','3.0 liter engine, twin turbo, Dual manifold exhoust, 16 inch rims');

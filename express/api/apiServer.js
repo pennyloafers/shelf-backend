@@ -3,7 +3,9 @@ const bodyParser = require("body-parser");
 const cassClient = require('./services/cassandra-client');
 
 const secret = require('./secret.json');
-const shelves = require('./src/shelves.js');
+const shelvesByUser = require('./src/shelves_by_username');
+const shelfItems = require('./src/shelf_items');
+const itemsDescription = require('./src/item_description');
 const user = require('./src/user.js');
 
 const app = express();
@@ -15,7 +17,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/user', user);
-app.use('/shelves', shelves);
+app.use('/shelves', shelvesByUser);
+app.use('/shelves', shelfItems);
+app.use('/shelves', itemsDescription);
+
 
 app.get('/', (req, res) => res.send("HEY it is connected to cassandra"));
 
