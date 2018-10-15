@@ -7,8 +7,7 @@ const cassandra = require('cassandra-driver');
 const secret = require('../secret');
 const ip = '172.20.0.3';
 //cassandra role login
-//should change default username/password to cassandra
-const authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra',secret.cassPass);
+const authProvider = new cassandra.auth.PlainTextAuthProvider('shelf_user',secret.cassPass);
 
 //test connect
 const client = new cassandra.Client({
