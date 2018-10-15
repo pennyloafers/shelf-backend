@@ -1,32 +1,57 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const cassClient = require('./services/cassandra-client');
+const jwt = require('jsonwebtoken');
 
-const secret = require('./secret.json');
+const secret = require('./secret');
 const shelvesByUser = require('./src/shelves_by_username');
 const shelfItems = require('./src/shelf_items');
 const itemsDescription = require('./src/item_description');
-const user = require('./src/user.js');
+const user = require('./src/user');
 
 const app = express();
 const port = 8888;
 
-//console.log(secret.jwt);
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/user', user);
-app.use('/shelves', shelvesByUser);
-app.use('/shelves', shelfItems);
-app.use('/shelves', itemsDescription);
+/*
+	jwt verification middleware
+	header format:
+		Authorization: bearer TOKEN
+	username is stored in req.user
+*/
+function verifyToken(req, res, next) {
+	// Check if authorization header exists
+	if (req.headers.authorization) {
+		// Check for malformed authorization header
+		var auth = req.headers.authorization.split(' ');
+		if (auth.length > 1 && auth[0] === 'bearer') {
+			// Verify the token
+			jwt.verify(auth[1], secret.jwt, function (err, decodedToken) {
+				if (err || !decodedToken) {
+					res.status(401).send({success: false, error: 'Invalid token'});
+				} else {
+					req.user = decodedToken.user;
+					next();
+				}
+			});
+		} else {
+			res.status(400).send({success: false, error: 'Malformed authorization header'});
+		}
+	} else {
+		res.status(400).send({success: false, error: 'Missing authorization header'});
+	}
+}
 
+app.use('/user', user);
+app.use('/shelves', verifyToken, shelvesByUser);
+app.use('/shelves', verifyToken, shelfItems);
+app.use('/shelves', verifyToken, itemsDescription);
 
 app.get('/', (req, res) => res.send("HEY it is connected to cassandra"));
 
-
-//app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
+//app.get('/test', verifyToken, (req, res) => res.send(req.user));
 
 //connect express to cassandra and start listening.
 cassClient.connect(function (err) {

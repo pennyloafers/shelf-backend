@@ -1,7 +1,8 @@
 const express = require('express');
 const cassClient = require('../services/cassandra-client');
+const secret = require('../secret');
 const Uuid = require('cassandra-driver').types.Uuid;
-const jwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const router = express();
 
@@ -24,7 +25,7 @@ function signup(req, res) {
 		//console.log(result);
 		// if result contains a user return 400 else next check
 		if (result.rowLength > 0) {
-			return res.status(400).send({error: 'Username is taken'});
+			return res.status(400).send({success: false, error: 'Username is taken'});
 		} else {
 			checkEmail(req, res);
 		}
@@ -32,7 +33,7 @@ function signup(req, res) {
 	// if error return 500
 	.catch (error => {
 		console.log(error.message);
-		return res.status(500).send({error: 'Server error'});
+		return res.status(500).send({success: false, error: 'Server error'});
 	})
 }
 
@@ -42,9 +43,9 @@ function checkEmail(req, res) {
 	const params = [req.body.email];
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
-		// if result contains an email return 400 create user
+		// if result contains an email return 400 else create user
 		if (result.rowLength > 0) {
-			return res.status(400).send({error: 'Email is already used'});
+			return res.status(400).send({success: false, error: 'Email is already used'});
 		} else {
 			createUser(req, res);
 		}
@@ -52,7 +53,7 @@ function checkEmail(req, res) {
 	// if error return 500
 	.catch (error => {
 		console.log(error.message);
-		return res.status(500).send({error: 'Server error'});
+		return res.status(500).send({success: false, error: 'Server error'});
 	})
 }
 
@@ -71,18 +72,18 @@ function createUser(req, res) {
 			cassClient.execute(query, params, { prepare: true })
 			.then(result => {
 				console.log('Created user: %s', req.body.user);
-				return res.status(200).send({message: 'Success'});
+				return res.status(200).send({success: true});
 			})
 			// if error return 500
 			.catch (error => {
 				console.log(error.message);
-				return res.status(500).send({error: 'Server error'});
+				return res.status(500).send({success: false, error: 'Server error'});
 			})
 		})
 		// if error return 500
 		.catch (error => {
 			console.log(error.message);
-			return res.status(500).send({error: 'Server error'});
+			return res.status(500).send({success: false, error: 'Server error'});
 		})
 	});
 }
@@ -102,10 +103,13 @@ function login(req, res) {
 			bcrypt.compare(req.body.password, result.rows[0].password, function(err, r) {
 				if (r) {
 					// generate jwt token and send back
-					return res.status(200).send({message: 'success'});
+					var token = jwt.sign({ user: req.body.user }, secret.jwt, {
+						expiresIn: 86400 // expires in 24 hours
+					});
+					return res.status(200).send({success: true, token: token});
 				} else {
 					// if passwords do not match return 400
-					return res.status(400).send({error: 'Invalid username or password'});
+					return res.status(400).send({success: false, error: 'Invalid username or password'});
 				}
 			});
 		}
@@ -113,7 +117,7 @@ function login(req, res) {
 	// if error return 500
 	.catch (error => {
 		console.log(error.message);
-		return res.status(500).send({error: 'Server error'});
+		return res.status(500).send({success: false, error: 'Server error'});
 	})
 }
 
