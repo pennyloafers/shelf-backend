@@ -11,8 +11,8 @@ then
 fi
 
 # Copy necessary files to container
-#docker cp ./settings/cassandra.yaml cass:/etc/cassandra/
-#docker cp ./init cass:/
+docker cp ./settings/cassandra.yaml cass:/etc/cassandra/
+docker cp ./init cass:/
 
 # Restart the docker images
 #docker-compose stop cassandra
@@ -27,7 +27,7 @@ USER=$(jq -r '.cassPass' "../express/api/secret.json")
 #docker exec cass cqlsh -u cassandra -p cassandra -e "ALTER USER cassandra WITH PASSWORD '$ROOT'"
 
 # Initialize tables
-#docker exec cass cqlsh -f /init/init.cql
+docker exec cass cqlsh -u cassandra -p $ROOT -f /init/init.cql
 
 # Initialize Roles
 #docker exec cass cqlsh -u cassandra -p $ROOT -e "CREATE ROLE IF NOT EXISTS shelf_user WITH PASSWORD = '$USER' AND LOGIN = true"

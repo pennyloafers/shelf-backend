@@ -36,6 +36,12 @@ CREATE TABLE IF NOT EXISTS shelf.users_by_email(
     PRIMARY KEY (email)
 );
 
+CREATE TABLE IF NOT EXISTS shelf.forgot(
+    id text,
+    username text,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS shelf.shelves(
     shelf_id uuid,
     name text,

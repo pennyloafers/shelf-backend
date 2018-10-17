@@ -51,7 +51,7 @@ app.use('/shelves', verifyToken, itemsDescription);
 
 app.get('/', (req, res) => res.send("HEY it is connected to cassandra"));
 
-//app.get('/test', verifyToken, (req, res) => res.send(req.user));
+app.get('/test', verifyToken, (req, res) => res.send(req.user));
 
 //connect express to cassandra and start listening.
 cassClient.connect(function (err) {
