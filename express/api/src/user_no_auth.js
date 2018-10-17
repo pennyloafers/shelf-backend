@@ -25,7 +25,7 @@ router.post('/forgot/reset', reset);
 function signup(req, res) {
 	async.waterfall([
 		function(callback) {
-				callback(null, req.body);
+			callback(null, req.body);
 		},
 		validateSignup,
 		hashPassword,
@@ -35,7 +35,7 @@ function signup(req, res) {
 		createUserByEmail
 		], function(err, status, result) {
 			return res.status(status).send(result);
-		});
+	});
 }
 
 /* 
@@ -163,7 +163,7 @@ function login(req, res) {
 		compareHash
 		], function(err, status, result) {
 			return res.status(status).send(result);
-		});
+	});
 }
 
 /* 
@@ -239,7 +239,7 @@ function forgot(req, res) {
 		sendEmail
 		], function(err, status, result) {
 			return res.status(status).send(result);
-		});
+	});
 }
 
 /* 
@@ -392,7 +392,7 @@ function reset(req, res) {
 		removeForgot
 		], function(err, status, result) {
 			return res.status(status).send(result);
-		});
+	});
 }
 
 /* 

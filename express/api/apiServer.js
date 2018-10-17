@@ -7,7 +7,8 @@ const secret = require('./secret');
 const shelvesByUser = require('./src/shelves_by_username');
 const shelfItems = require('./src/shelf_items');
 const itemsDescription = require('./src/item_description');
-const user = require('./src/user');
+const userNoAuth = require('./src/user_no_auth');
+const userAuth = require('./src/user_auth');
 
 const app = express();
 const port = 8888;
@@ -44,7 +45,8 @@ function verifyToken(req, res, next) {
 	}
 }
 
-app.use('/user', user);
+app.use('/user', userNoAuth);
+app.use('/user', verifyToken, userAuth);
 app.use('/shelves', verifyToken, shelvesByUser);
 app.use('/shelves', verifyToken, shelfItems);
 app.use('/shelves', verifyToken, itemsDescription);
