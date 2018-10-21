@@ -54,7 +54,7 @@ function validateSignup(body, callback) {
 	
 	// Validate post data
 	let keys = Object.keys(body);
-	if (!keys.includes('user') || !keys.includes('password') || !keys.includes('email')) {
+	if (!keys.includes('username') || !keys.includes('password') || !keys.includes('email')) {
 		callback(true, 400, {success: false, error: 'Missing post parameters'});
 	} else if (!userRegex.test(body.username) || typeof body.username != 'string') {
 		callback(true, 400, {success: false, error: 'Invalid username'});
@@ -172,7 +172,7 @@ function login(req, res) {
 */
 function validateLogin(body, callback) {
 	let keys = Object.keys(body);
-	if (!keys.includes('user') || !keys.includes('password')) {
+	if (!keys.includes('username') || !keys.includes('password')) {
 		callback(true, 400, {success: false, error: 'Missing post parameters'});
 	} else if (typeof body.username != 'string' || typeof body.password != 'string') {
 		callback(true, 400, {success: false, error: 'Invalid username or password'});
