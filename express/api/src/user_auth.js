@@ -14,7 +14,7 @@ router.post('/update/password', changePassword);
 function changeEmail(req, res) {
 	async.waterfall([
 		function(callback) {
-			req.body.user = req.user;
+			req.body.username = req.user;
 			callback(null, req.body);
 		},
 		validateEmail,
@@ -65,7 +65,7 @@ function checkEmail(body, callback) {
 // Store old email in body.emailOld
 function getEmail(body, callback) {
 	let query = "SELECT email, id FROM shelf.users WHERE username = ?";
-	const params = [body.user];
+	const params = [body.username];
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		body.id = result.rows[0].id;
@@ -82,7 +82,7 @@ function getEmail(body, callback) {
 // Update user table with new email
 function updateUser(body, callback) {
 	let query = "UPDATE shelf.users SET email = ? WHERE username = ?";
-	const params = [body.email, body.user];
+	const params = [body.email, body.username];
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		callback(null, body);
@@ -112,7 +112,7 @@ function deleteEmail(body, callback) {
 // Update user_by_email table with new email
 function updateEmail(body, callback) {
 	let query = "INSERT INTO shelf.users_by_email (id, username, email) VALUES (?, ?, ?)"
-	const params = [body.id, body.user, body.email]
+	const params = [body.id, body.username, body.email]
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		callback(null, 200, {success: true});

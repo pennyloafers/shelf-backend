@@ -56,7 +56,7 @@ function validateSignup(body, callback) {
 	let keys = Object.keys(body);
 	if (!keys.includes('user') || !keys.includes('password') || !keys.includes('email')) {
 		callback(true, 400, {success: false, error: 'Missing post parameters'});
-	} else if (!userRegex.test(body.user) || typeof body.user != 'string') {
+	} else if (!userRegex.test(body.username) || typeof body.username != 'string') {
 		callback(true, 400, {success: false, error: 'Invalid username'});
 	} else if (!emailRegex.test(body.email) || typeof body.email != 'string') {
 		callback(true, 400, {success: false, error: 'Invalid email'});
@@ -81,7 +81,7 @@ function hashPassword(body, callback) {
 // Check if username is taken
 function checkUser(body, callback) {
 	let query = "SELECT username FROM shelf.users WHERE username = ?";
-	const params = [body.user];
+	const params = [body.username];
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		// if result contains a user return 400 else next check
@@ -122,7 +122,7 @@ function checkEmail(body, callback) {
 function createUser(body, callback) {
 	body.id = Uuid.random();
 	let query = "INSERT INTO shelf.users (id, username, password, email) VALUES (?, ?, ?, ?)"
-	const params = [body.id, body.user, body.password, body.email]
+	const params = [body.id, body.username, body.password, body.email]
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		callback(null, body);
@@ -137,10 +137,10 @@ function createUser(body, callback) {
 // Store user info into users_by_email table
 function createUserByEmail(body, callback) {
 	let query = "INSERT INTO shelf.users_by_email (id, username, email) VALUES (?, ?, ?)"
-	const params = [body.id, body.user, body.email]
+	const params = [body.id, body.username, body.email]
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
-		console.log('Created user: %s', body.user);
+		console.log('Created user: %s', body.username);
 		callback(null, 200, {success: true})
 	})
 	// if error return 500
@@ -174,7 +174,7 @@ function validateLogin(body, callback) {
 	let keys = Object.keys(body);
 	if (!keys.includes('user') || !keys.includes('password')) {
 		callback(true, 400, {success: false, error: 'Missing post parameters'});
-	} else if (typeof body.user != 'string' || typeof body.password != 'string') {
+	} else if (typeof body.username != 'string' || typeof body.password != 'string') {
 		callback(true, 400, {success: false, error: 'Invalid username or password'});
 	} else {
 		callback(null, body);
@@ -187,7 +187,7 @@ function validateLogin(body, callback) {
 */
 function getHash(body, callback) {
 	let query = "SELECT password FROM shelf.users WHERE username = ?"
-	const params = [body.user]
+	const params = [body.username]
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		if (result.rowLength == 0) {
@@ -212,7 +212,7 @@ function compareHash(body, callback) {
 	bcrypt.compare(body.password, body.hash, function(err, result) {
 		if (result) {
 			// generate jwt token and send back
-			var token = jwt.sign({ user: body.user }, secret.jwt, {
+			var token = jwt.sign({ user: body.username }, secret.jwt, {
 				expiresIn: 86400 // expires in 24 hours
 			});
 			callback(null, 200, {success: true, token: token})
@@ -259,7 +259,7 @@ function validateForgot(body, callback) {
 
 /*
 	Check if email is in users_by_email
-	If found store username in body.user
+	If found store username in body.username
 	If not found return 200 for security
 */
 function verifyEmail(body, callback) {
@@ -269,7 +269,7 @@ function verifyEmail(body, callback) {
 	.then(result => {
 		// if result contains an email return 400 else create user
 		if (result.rowLength > 0) {
-			body.user = result.rows[0].username;
+			body.username = result.rows[0].username;
 			callback(null, body);
 		} else {
 			callback(true, 200, {success: true});
@@ -302,7 +302,7 @@ function generateUrl(body, callback) {
 */
 function updateForgot(body, callback) {
 	let query = "INSERT INTO shelf.forgot (id, username) VALUES (?, ?) USING TTL 1800"
-	const params = [body.token, body.user]
+	const params = [body.token, body.username]
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		callback(null, body);
@@ -334,7 +334,7 @@ function sendEmail(body, callback) {
 		subject: 'Password Reset',
 		html: `
 			<h2>Shelf Password Reset Request</h2>
-			<p>Hello ${body.user},<br>
+			<p>Hello ${body.username},<br>
 			Someone has requested a password reset for your shelf account.
 			If you didn't request a password reset, just ignore this email and
 			your password will stay the same.</p>
@@ -417,7 +417,7 @@ function validateReset(body, callback) {
 
 /*
 	Retrieves username from forgot table
-	Username is stored in body.user
+	Username is stored in body.username
 */
 function getUser(body, callback) {
 	let query = "SELECT username FROM shelf.forgot WHERE id = ?";
@@ -426,7 +426,7 @@ function getUser(body, callback) {
 	.then(result => {
 		// if result contains an email return 400 else create user
 		if (result.rowLength > 0) {
-			body.user = result.rows[0].username;
+			body.username = result.rows[0].username;
 			callback(null, body);
 		} else {
 			callback(true, 400, {success: false, error: "This token is either invalid or expired"});
@@ -442,7 +442,7 @@ function getUser(body, callback) {
 // users table is updated with new password
 function updateUser(body, callback) {
 	let query = "UPDATE shelf.users SET password = ? WHERE username = ?";
-	const params = [body.password, body.user];
+	const params = [body.password, body.username];
 	cassClient.execute(query, params, { prepare: true })
 	.then(result => {
 		callback(null, body);
