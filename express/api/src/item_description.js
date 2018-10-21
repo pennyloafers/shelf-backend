@@ -16,7 +16,7 @@ function getItemDescript(req,res){
     const query =   'SELECT descriptions FROM shelf.item_props_by_item '+
                     'WHERE username = ? AND item_id = ?;';
     const params = [
-        req.body.username,
+        req.user,
         req.body.itemID,
     ];
 
@@ -50,7 +50,7 @@ function getItemDescript(req,res){
 function updateItemDescript(req,res){
     const query = 'INSERT INTO shelf.item_props_by_item (username, item_id, descriptions) VALUES (?,?,?);'
     const params = [
-        req.body.username,
+        req.user,
         req.body.itemID,
         req.body.otherProps
     ];

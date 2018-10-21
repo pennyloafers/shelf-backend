@@ -1,4 +1,4 @@
 id,username,password,email
-4d46bc41-8b9a-4689-afb3-51a8a2b6dae2,userOne,userOnepass,userOne@mail.com
-11c68e4e-8e2e-49b7-a782-81f74a1a69db,userTwo,userTwopass,userTwo@mail.com
-c9eee4cd-6495-4bc8-86a4-0ced363d8346,tim,timpass,tim@mail.com
+4d46bc41-8b9a-4689-afb3-51a8a2b6dae2,userOne,$2a$10$DU0lUqUklYscUQwuH6wLJe1sHVuKsoBGRZNwQyRMLCRps52cMh7jK,userOne@mail.com
+11c68e4e-8e2e-49b7-a782-81f74a1a69db,userTwo,$2a$10$9774f6xpNXmlYHNQE4xsb.S2b/cnm.AEShgrGJspdpLw69qGpFp76,userTwo@mail.com
+c9eee4cd-6495-4bc8-86a4-0ced363d8346,tim,$2a$10$bfKVKti9Lg5nQdM7Q4OgFu7sB.Dcmv5uSM3uO7nAWOTmyekCwUFiS,tim@mail.com

@@ -13,12 +13,12 @@ module.exports = router;
  * Retrieve user's shelves by name only
  */
 function getUserShelves(req,res) {
-    //console.log(req)
+    console.log(req)
     //Build query: ? can be filled later
     const query = "SELECT shelf_type, shelf_id, shelf_created FROM shelf.shelves_by_username WHERE username = ?;";
 
     //Prepare parameters for ?'s: must be an array
-    const params = [req.body.username];
+    const params = [req.user];
     //const params = ['userTw'];
      
     //call client with query & params: 
@@ -62,7 +62,7 @@ function upsertShelf(req,res){
                     'VALUES (?,?,?,?);';
     const shelfID = req.body.shelfID ? req.body.shelfID : Uuid.random();
     const params = [
-        req.body.username,
+        req.user,
         req.body.shelfType,
         shelfID,
         req.body.shelfCreated 
@@ -90,7 +90,7 @@ function removeShelf(req,res){
     const query =   'DELETE FROM shelf.shelves_by_username '+
                     'WHERE username = ? AND shelf_type = ? AND shelf_id = ?;';
     const params = [
-        req.body.username,
+        req.user,
         req.body.shelfType,
         req.body.shelfID
     ];

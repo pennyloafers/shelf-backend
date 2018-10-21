@@ -27,7 +27,7 @@ function verifyToken(req, res, next) {
 	if (req.headers.authorization) {
 		// Check for malformed authorization header
 		var auth = req.headers.authorization.split(' ');
-		if (auth.length > 1 && auth[0] === 'bearer') {
+		if (auth.length > 1 && auth[0] === 'Bearer') {
 			// Verify the token
 			jwt.verify(auth[1], secret.jwt, function (err, decodedToken) {
 				if (err || !decodedToken) {

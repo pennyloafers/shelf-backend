@@ -27,7 +27,7 @@ function getItems(req,res){
     const query =   'SELECT * FROM shelf.shelf_contents_by_shelf '+
                     'WHERE username = ? AND shelf_id = ?;';
     const params = [
-        req.body.username,
+        req.user,
         req.body.shelfID
     ];
     // const params = [
@@ -72,7 +72,7 @@ function upsertItem(req,res){
                     ' VALUES (?,?,?,?,?,?);';
     const itemID = req.body.itemID ? req.body.itemID : Uuid.random();
     const params = [
-        req.body.username,
+        req.user,
         req.body.shelfID,
         req.body.itemName,
         itemID,
@@ -109,7 +109,7 @@ function upsertImageBlob(req,res){
                     '(username, shelf_id, item_id, image_blob)'+
                     ' VALUES (?,?,?,?,?,?);';
     const params = [
-        req.body.username,
+        req.user,
         req.body.shelfID,
         req.body.itemID,
         req.body.imageBlob
@@ -133,7 +133,7 @@ function upsertImageBlob(req,res){
 function removeItem(req,res){
     const query = 'DELETE FROM shelf.shelf_contents_by_shelf WHERE username = ? AND shelf_id = ? AND item_name = ? AND item_id = ?';
     const params = [
-        req.body.username,
+        req.user,
         req.body.shelfID,
         req.body.itemName,
         req.body.itemID
