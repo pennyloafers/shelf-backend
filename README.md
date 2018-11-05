@@ -25,10 +25,10 @@ $ docker exec -it cass bash
     "cassRoot": "cassandra"  #default password for cassandra container.
     "cassPass": "rolePass"   #role password for limited access
     "email": "_yourEmail@gmail.com",
-	  "emailPass": "Secret",
-	  "emailId": "_ourID.apps.googleusercontent.com",
-	  "emailSecret": "Secret",
-	  "emailRefresh": "Secret"
+    "emailPass": "Secret",
+    "emailId": "_ourID.apps.googleusercontent.com",
+    "emailSecret": "Secret",
+    "emailRefresh": "Secret"
   }
 ```
 
