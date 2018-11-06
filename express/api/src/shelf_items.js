@@ -24,8 +24,14 @@ module.exports = router;
  */
 
 function getItems(req,res){
+    const keys = Object.keys(req.body);
+    if( !keys.includes('shelfID')){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
+
     const query =   'SELECT * FROM shelf.shelf_contents_by_shelf '+
                     'WHERE username = ? AND shelf_id = ?;';
+    
     const params = [
         req.user,
         req.body.shelfID
@@ -67,6 +73,10 @@ function getItems(req,res){
  */
 
 function upsertItem(req,res){
+    const keys = Object.keys(req.body);
+    if( !keys.includes('shelfID') || !keys.includes('itemName') || !keys.includes('itemID') || !keys.includes('itemCreated') || !keys.includes('tags')){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
     const query =   'INSERT INTO shelf.shelf_contents_by_shelf '+
                     '(username, shelf_id, item_name, item_id, item_created, tags)'+
                     ' VALUES (?,?,?,?,?,?);';
@@ -90,7 +100,7 @@ function upsertItem(req,res){
     // ];
     cassClient.execute(query,params,{prepare:true})
     .then(result => {
-        res.status(200).send({message: "Success", itemID});
+        res.status(200).send({success:true, itemID});
     })
     .catch (error => {
         console.log(error.message);
@@ -105,6 +115,10 @@ function upsertItem(req,res){
  */
 
 function upsertImageBlob(req,res){
+    const keys = Object.keys(req.body);
+    if( !keys.includes('shelfID') || !keys.includes('itemID') ||  !keys.includes('imageBlob')){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
     const query =   'INSERT INTO shelf.shelf_contents_by_shelf '+
                     '(username, shelf_id, item_id, image_blob)'+
                     ' VALUES (?,?,?,?,?,?);';
@@ -117,7 +131,7 @@ function upsertImageBlob(req,res){
    
     cassClient.execute(query,params,{prepare:true})
     .then(result => {
-        res.status(200).send({message: "Success"});
+        res.status(200).send({success: true});
     })
     .catch (error => {
         console.log(error.message);
@@ -131,6 +145,10 @@ function upsertImageBlob(req,res){
  * based on username, shelfID, itemName, itemID 
  */
 function removeItem(req,res){
+    const keys = Object.keys(req.body);
+    if( !keys.includes('shelfID') || !keys.includes('itemName') || !keys.includes('itemID')){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
     const query = 'DELETE FROM shelf.shelf_contents_by_shelf WHERE username = ? AND shelf_id = ? AND item_name = ? AND item_id = ?';
     const params = [
         req.user,
@@ -146,7 +164,7 @@ function removeItem(req,res){
     // ]
     cassClient.execute(query, params, { prepare: true })
     .then(result => {
-        res.status(200).send({ message:"Success"});
+        res.status(200).send({ success: true });
     })
     .catch (error => {
         console.log(error.message);

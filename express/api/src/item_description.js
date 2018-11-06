@@ -13,6 +13,10 @@ module.exports = router;
  */
 
 function getItemDescript(req,res){
+    const keys = Object.keys(req.body);
+    if( !keys.includes('itemID') ){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
     const query =   'SELECT descriptions FROM shelf.item_props_by_item '+
                     'WHERE username = ? AND item_id = ?;';
     const params = [
@@ -48,6 +52,11 @@ function getItemDescript(req,res){
  * as an upsert.
  */
 function updateItemDescript(req,res){
+    const keys = Object.keys(req.body);
+    if(!keys.includes('itemID') || !keys.includes('otherProps')){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
+
     const query = 'INSERT INTO shelf.item_props_by_item (username, item_id, descriptions) VALUES (?,?,?);'
     const params = [
         req.user,
@@ -57,7 +66,7 @@ function updateItemDescript(req,res){
 
     cassClient.execute(query, params, { prepare: true })
     .then(result => {
-        res.status(200).send({message:'Success'});
+        res.status(200).send({success: true});
     })
     .catch (error => {
         console.log(error.message);

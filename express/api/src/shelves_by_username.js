@@ -3,7 +3,7 @@ const cassClient = require('../services/cassandra-client');
 
 const router = express();
 
-router.post('/getUserShelves', getUserShelves);
+router.get('/getUserShelves', getUserShelves);
 router.post('/upsertShelf',upsertShelf);
 router.post('/removeShelf',removeShelf);
 
@@ -13,7 +13,7 @@ module.exports = router;
  * Retrieve user's shelves by name only
  */
 function getUserShelves(req,res) {
-    console.log(req)
+    //console.log(req)
     //Build query: ? can be filled later
     const query = "SELECT shelf_type, shelf_id, shelf_created FROM shelf.shelves_by_username WHERE username = ?;";
 
@@ -57,6 +57,14 @@ function getUserShelves(req,res) {
  */
 
 function upsertShelf(req,res){
+    //validate input paramaters
+    const keys = Object.keys(req.body);
+    if( !keys.includes('shelfType') || !keys.includes('shelfID') || !keys.includes('shelfCreated')){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
+    
+    
+    
     const query =   'INSERT INTO shelf.shelves_by_username '+
                     '(username, shelf_type, shelf_id, shelf_created) '+
                     'VALUES (?,?,?,?);';
@@ -71,7 +79,7 @@ function upsertShelf(req,res){
     cassClient.execute(query, params, { prepare: true })
     .then(result => {
         //if success 
-        res.status(200).send({message: 'Success', shelfID});
+        res.status(200).send({ success:true, shelfID});
     })
     .catch (error => {
         console.log(error.message);
@@ -87,6 +95,13 @@ function upsertShelf(req,res){
  */
 
 function removeShelf(req,res){
+    const keys = Object.keys(req.body);
+    if( !keys.includes('shelfType') || !keys.includes('shelfID')){
+        res.status(400).send({ error: "Missing Parameters" });
+    }
+    
+    
+    
     const query =   'DELETE FROM shelf.shelves_by_username '+
                     'WHERE username = ? AND shelf_type = ? AND shelf_id = ?;';
     const params = [
@@ -98,11 +113,9 @@ function removeShelf(req,res){
     cassClient.execute(query, params, { prepare: true })
     .then(result => {
         //check if success
-        if(true){
-            res.status(200).send({success: true});
-        } else {
-            res.status(400).send({success: false});
-        }
+        
+        res.status(200).send({success: true});
+        
     })
     .catch (error => {
         console.log(error.message);
