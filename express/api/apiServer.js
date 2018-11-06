@@ -1,3 +1,5 @@
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
 const bodyParser = require("body-parser");
 const cassClient = require('./services/cassandra-client');
@@ -55,15 +57,27 @@ app.get('/', (req, res) => res.send("HEY it is connected to cassandra"));
 
 app.get('/test', verifyToken, (req, res) => res.send(req.user));
 
+
+
+const server = https.createServer({
+	key: fs.readFileSync('../.https/server.key'),
+	cert: fs.readFileSync('../.https/server.cert')
+  }, app);
+  
 //connect express to cassandra and start listening.
 cassClient.connect(function (err) {
-    if (err) return console.error(err);
+	if (err) {
+		return console.error(err);
+	}
     console.log('Connected to cluster with %d host(s): %j', cassClient.hosts.length, cassClient.hosts.keys());
     console.log('Keyspaces: %j', Object.keys(cassClient.metadata.keyspaces));
-    
-    app.listen(port, () => {
+	
+	server.listen(port,  () => {
         console.log(`App is listening on port ${port}!`)
     });
+    // app.listen(port, () => {
+    //     console.log(`App is listening on port ${port}!`)
+    // });
     
     console.log("Connected to Cassandra Server ");
 });

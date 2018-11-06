@@ -11,7 +11,7 @@ const authProvider = new cassandra.auth.PlainTextAuthProvider('shelf_user',secre
 
 //test connect
 const client = new cassandra.Client({
-    contactPoints: [ip],
+    contactPoints: ['localhost'],
     authProvider: authProvider,
     socketOptions:{
         connectTimeout: 15000 
